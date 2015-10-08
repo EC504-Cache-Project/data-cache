@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();  
 var server = require('http').createServer(app); 
 var io = require('socket.io')(server);
-var port = 3232;
+var port = 8080;
 
 // app setup ================================
 app.use("/css", express.static(__dirname + '/css'));
