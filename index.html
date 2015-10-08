@@ -16,37 +16,35 @@
       <div class="header">
         <h2>Cache Data Sync</h2> 
       </div>
-
-      <!-- Data Input Column -->
-      <div class="input-box">
-          <form action="">
-              <input id="data_input" placeholder = "Say something..."/>
-              <button>Send</button>
-          </form>
-          <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-          <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-          <script>
-            var socket = io();
-            $('form').submit(function(){
-              socket.emit('message', $('#data_input').val());
-              $('#data_input').val('');
-              return false;
-            });
-            socket.on('message', function(msg){
-              $('#messages').append($('<li>').text(msg));
-            });
-          </script>
+      <div class="main">
+        <form action="">
+            <input id="data_input" placeholder = "Say something..."/>
+            <button>Send</button>
+        </form>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script>
+          var socket = io();
+          $('form').submit(function(){
+            socket.emit('message', $('#data_input').val());
+            $('#data_input').val('');
+            return false;
+          });
+          socket.on('message', function(msg){
+            $('#messages').append($('<li>').text(msg));
+          });
+        </script>
       </div>
 
       <!-- Search Box -->
-      <div class="search-box">
+<!--       <div class="search-box">
         <div class="search-container">
             <input type="search" id="search" placeholder="Search for something..." />
             <button class="icon"><i class="fa fa-search"></i></button>
         </div>
-      </div>
+      </div> -->
 
-      <!-- Message Data Container .... THIS NEEDS BETTER STLYING-->
+      <!-- Message Data Container -->
       <div class="message-container">
         <ul id="messages"></ul>
       </div>
