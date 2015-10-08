@@ -10,4 +10,4 @@ Once Node.JS is installed, navigate to the project's directory and use your term
 > node app.js
 
 And that's it! You can now view the app in your browser using the IP address and port number that is running the app. 
-> 'http://xxx.xxx.x.x:port'.
+> e.g. '127.0.0.1:port'.
