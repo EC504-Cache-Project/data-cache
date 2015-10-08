@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>EC 504 Data Cache Sync</title>
+
+    <!-- styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- js scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    </head>
+
+    <body>
+      <!-- Header -->
+      <div class="header">
+        <h2>Cache Data Sync</h2> 
+      </div>
+
+      <!-- Data Input Column -->
+      <div class="input-box">
+          <form action="">
+              <input id="data_input" placeholder = "Say something..."/>
+              <button>Send</button>
+          </form>
+          <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+          <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+          <script>
+            var socket = io();
+            $('form').submit(function(){
+              socket.emit('message', $('#data_input').val());
+              $('#data_input').val('');
+              return false;
+            });
+            socket.on('message', function(msg){
+              $('#messages').append($('<li>').text(msg));
+            });
+          </script>
+      </div>
+
+      <!-- Search Box -->
+      <div class="search-box">
+        <div class="search-container">
+            <input type="search" id="search" placeholder="Search for something..." />
+            <button class="icon"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+
+      <!-- Communication Data Container -->
+      <div id="data"></div>
+      <ul id="messages"></ul>
+
+
+      <!-- Footer -->
+      <div class="footer">
+        <p class="footer-p">Copyright &copy; 2015. Created for EC504.</p>
+      </div>
+    </body>
+</html>  
