@@ -1,28 +1,34 @@
-// init setup ==============================
-var express = require('express');  
-var app = express();  
-var server = require('http').createServer(app); 
-var io = require('socket.io')(server);
-var port = 8080;
+// required libraries ====================================
+var SocketIOFileUpload = require('socketio-file-upload'),
+    socketio = require('socket.io'),
+    express = require('express');
 
-// app setup ================================
-app.use("/css", express.static(__dirname + '/css'));
-
-// route handler ======================
-app.get('/', function(req, res){
+// express app setup =====================================
+var app = express()
+    .use(SocketIOFileUpload.router)
+    .use("/css", express.static(__dirname + '/css'))
+    .get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
-});
+	})
+    .listen(9090);
 
 // socket handler =====================
-io.on('connection', function(socket){
-  socket.on('message', function(msg){
-    io.emit('message', msg);
-  });
+// Start up Socket.IO:
+var io = socketio.listen(app);
+io.sockets.on("connection", function(socket){
 
-  
-});
+    // Make an instance of SocketIOFileUpload and listen on this socket:
+    var uploader = new SocketIOFileUpload();
+    uploader.dir = "srv/uploads";
+    uploader.listen(socket);
 
-// server setup =======================
-server.listen(port, function(){
-  console.log('Server is listening on port '+ port);
+    // Do something when a file is saved:
+    uploader.on("saved", function(event){
+        console.log(event.file);
+    });
+
+    // Error handler:
+    uploader.on("error", function(event){
+        console.log("Error from uploader", event);
+    });
 });

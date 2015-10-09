@@ -9,6 +9,30 @@
 
     <!-- js scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script src="/siofu/client.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function(){
+
+        // Initialize instances:
+        var socket = io.connect();
+        var siofu = new SocketIOFileUpload(socket);
+
+        // Configure the three ways that SocketIOFileUpload can read files:
+        // document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
+        siofu.listenOnInput(document.getElementById("data_input"));
+        // siofu.listenOnDrop(document.getElementById("file_drop"));
+
+        // Do something when a file is uploaded:
+        siofu.addEventListener("complete", function(event){
+            console.log(event.success);
+            console.log(event.file);
+        });
+
+    }, false);
+    </script>
     </head>
 
     <body>
@@ -17,23 +41,8 @@
         <h2>Cache Data Sync</h2> 
       </div>
       <div class="main">
-        <form action="">
-            <input id="data_input" placeholder="Say something..."/>
-            <button>Send</button>
-        </form>
-        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-        <script>
-          var socket = io();
-          $('form').submit(function(){
-            socket.emit('message', $('#data_input').val());
-            $('#data_input').val('');
-            return false;
-          });
-          socket.on('message', function(msg){
-            $('#messages').append($('<li>').text(msg));
-          });
-        </script>
+          <input type="file" id="data_input"/>
+          <button>Send</button>
       </div>
 
       <!-- Search Box -->
